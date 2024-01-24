@@ -1,0 +1,18 @@
+---
+title: "newpage"
+author: "Carlos Amissah"
+date: "2024-01-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+[linking](Homework_02.rmd)
+
+
+
+
+
