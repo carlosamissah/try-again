@@ -1,5 +1,5 @@
 ---
-title: "index"
+title: "Homework2"
 author: "Carlos Amissah"
 date: "2024-01-24"
 output: html_document
@@ -8,14 +8,6 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-
-
-Homework 2: [link](LHomework2.html)
-
-
-
-
 
 ## R Markdown
 
