@@ -11,9 +11,9 @@
 
 <meta name="author" content="Carlos Amissah" />
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-02-02" />
 
-<title>index</title>
+<title>Homework3</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,15 +350,72 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">index</h1>
+<h1 class="title toc-ignore">Homework3</h1>
 <h4 class="author">Carlos Amissah</h4>
-<h4 class="date">2024-01-24</h4>
+<h4 class="date">2024-02-02</h4>
 
 </div>
 
 
-<p>Homework 2: <a href="LHomework2.html">link</a></p>
-<p>Homework 3: <a href="LHomework3.html">link</a></p>
+<pre><code>                                        Question 1</code></pre>
+<pre><code>Find:\s+
+replace:,</code></pre>
+<p>First String,Second,1.22,3.4 Second,More Text,1.555555,2.2220
+Third,x,3,124</p>
+<p>I used find “+” which finds spaces between words and replace with a
+“,”</p>
+<pre><code>                                       Question 2</code></pre>
+<p>``` Find: (), (), (.*) Replace: \2 \1 (\3)</p>
+<p>Bryan Ballif (University of Vermont) Aaron Ellison (Harvard Forest)
+Sydne Record (Bryn Mawr)</p>
+<p>The expression (), (), (.*) highlights each word in the string and
+replace them with with the expression \2 \1 (\3). The replace expression
+arranges the names according to last and first names, whereas the space
+ensures spacing between the names. The last command puts the last string
+in a bracket.</p>
+<pre><code>                                Question 3</code></pre>
+<p>0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003
+Winder Slide.mp3 0004 Walking Cane.mp3 I used the eexpression
+“(+[^0-9]<em>)” to highlight the text of interest and replaced it with
+”\1”. The expression ”+” selected the set of texts (either numerical or
+words) whereas the expression [^0-9]</em>highlight every other word
+format except numerical values. The”” selected the remaining numerical
+value. I placed the eexpression in parenthesis so that I can wrap it as
+one entity. The “\1” expression took the wrapped entity and the “”
+expression break the line from that point pushing every other sentence
+on that role to the next line.<br />
+Georgia Horseshoe_0001.mp3</p>
+<pre><code>                                      Question 4</code></pre>
+<p>Georgia Horseshoe_.mp30001 Billy In The Lowground_.mp30002 Winder
+Slide_.mp30003 Walking Cane_.mp30004</p>
+<p>I used the eexpression “([^0-9]<em>)()(.</em>)” to highlight the text
+of interest and replaced it with “\1\3\2”. The expression in the replace
+section selects the first two words and the underscore ([^0-9]<em>)
+followed by .mp3 (.</em>)and the four digits ().</p>
+<pre><code>                                     Question 5</code></pre>
+<p>C_pennsylvanicus,44 C_herculeanus,3 M_punctiventris,4
+L_neoniger,55</p>
+<p>The expression “()(+),(+),(+).(),(+)” highlights the entire word
+string and replaces it with the expression “\1_\3,\6”. The expression in
+the replace section picks the first letter of the species name (),adds
+an underscore and the genus(+) followed by a comma and the last
+number(s)(+).</p>
+<pre><code>                                    Question 6</code></pre>
+<p>C_penn,44 C_herc,3 M_punc,4 L_neon,55</p>
+<p>The expression “()(+),()(+),(+).(),(+)” highlights the entire word
+string and replaces it with the expression “\1_\3,\7”. The expression in
+the replace section picks the first letter of the species name(),adds an
+underscore and the first four letters of the genus() followed by a comma
+and the last number(s)(+).</p>
+<pre><code>                                   Question 7</code></pre>
+<p>Campen, 44, 10.2 Camher, 3, 10.5 Myrpun, 4, 12.2 Lasneo, 55, 3.3</p>
+<p>The expression “()(+),()(+),(+).(,()” highlights the entire word
+string and replaces it with the expression “\1\3, \7, \5.\6”. The
+expression in the replace section merges the first three letters of the
+species name() with the first three letters of the genus() followed by a
+comma. Next,the last number(s)() from the original word string is
+selected, followed by a comma and the decimal number (first digit(s)(+),
+a period and the last digit().</p>
 
 
 

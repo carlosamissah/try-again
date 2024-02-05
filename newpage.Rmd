@@ -10,8 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-[linking](Homework_02.html)
-
 
 
 
