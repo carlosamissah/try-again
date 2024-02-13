@@ -1,0 +1,107 @@
+---
+title: "Homework 4"
+author: "Carlos Amissah"
+date: "2024-02-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+```{r}
+x <- 1.1
+a <- 2.2
+b <- 3.3
+ z <- c(1.1, 2.2, 3.3)
+ print(z)
+```
+# a. $x^{a^b}$
+
+```{r}
+z <- x^a^b
+print(z)
+```
+
+# b. $(x^a)^b$
+```{r}
+z <- (x^a)^b
+print(z)
+```
+
+# c. $3x^3 + 2x^2 + 1$
+```{r}
+z <- 3*x^3 + 2*x^2 + 1
+print(z)
+```
+
+# Question 2
+# a.(1,2,3,4,5,6,7,8,7,6,5,4,3,2,1)
+```{r}
+seq(1,8)
+seq(7,1)
+a<- c(seq(1,8),seq(7,1))
+print(a)
+```
+
+# b. (1,2,2,3,3,3,4,4,4,4,5,5,5,5,5)
+```{r}
+y<- seq(1,5)
+print(y)
+a<- rep(x=y,times=y)
+print(a)
+```
+
+# c. (5,4,4,3,3,3,2,2,2,2,1,1,1,1,1)
+```{r}
+a<- seq(from=5,to=1)
+z<- rep(x=a, times= seq(1,5))
+print(z)
+```
+
+```{r}
+z<- runif(2)
+print(z)
+# computing r using 
+r <- sqrt(z[1]^2+z[2]^2)
+print(r)
+# computing theta
+atan(z[2]/r)
+```
+
+## Question 4
+```{r}
+queue <- c("sheep","fox","owl","ant")
+print(queue)
+## a. the serpent arrives and gets in line;
+queue <- c(queue,"serpent")
+print(queue)
+## b. the sheep enters the ark;
+queue <- queue[-1]
+print(queue)
+## c. the donkey arrives and talks his way to the front of the line;
+queue<- c("donkey", queue)
+print(queue)
+## d. the serpent gets impatient and leaves;
+queue <- queue[-5]
+print(queue)
+## e. the owl gets bored and leaves;
+queue <- queue[-3]
+print(queue)
+## f. the aphid arrives and the ant invites him to cut in line.
+queue <- c(queue,"aphid")
+print(queue)
+## g. Finally, determine the position of the aphid in the line.
+
+which(queue=="aphid")
+
+```
+## Question 5
+```{r}
+z <- c(1:100)
+print(z)
+# finding values of z not divisible 2,3, or 7
+x <- which(z %% 2 & z %% 3 & z %% 7)
+print(x)
+```
