@@ -11,9 +11,9 @@
 
 <meta name="author" content="Carlos Amissah" />
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-02-20" />
 
-<title>index</title>
+<title>Homework_05</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,17 +350,210 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">index</h1>
+<h1 class="title toc-ignore">Homework_05</h1>
 <h4 class="author">Carlos Amissah</h4>
-<h4 class="date">2024-01-24</h4>
+<h4 class="date">2024-02-20</h4>
 
 </div>
 
 
-<p>Homework 2: <a href="Homework2.html">link</a></p>
-<p>Homework 3: <a href="Homework3.html">link</a></p>
-<p>Homework 4: <a href="Homework_04.html">link</a></p>
-<p>Homework 5: <a href="Homework_05.html">link</a></p>
+<p>```## Question 1</p>
+<pre class="r"><code>n_dims &lt;- sample(x=seq(3,10), size = 1)
+
+n_dims^2</code></pre>
+<pre><code>## [1] 49</code></pre>
+<pre class="r"><code>z &lt;- c(1:n_dims^2)
+
+Sample_z &lt;- sample(z)
+
+# create a square matrix
+my_m &lt;- matrix(data=Sample_z, ncol=Sample_z, nrow = Sample_z)
+print(my_m)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]    7    5   33   39    1   49   45
+## [2,]   29   37    6   31    2   10   23
+## [3,]   43   30   42   25   22   18    4
+## [4,]   16   11   38   24   44   20   32
+## [5,]   46   26   21   35   40   47   36
+## [6,]   41   15   19   13   34   28   27
+## [7,]   48   12   17    8    3    9   14</code></pre>
+<pre class="r"><code># transpose matrix
+t_my_m &lt;- t(my_m)
+print(t_my_m)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]    7   29   43   16   46   41   48
+## [2,]    5   37   30   11   26   15   12
+## [3,]   33    6   42   38   21   19   17
+## [4,]   39   31   25   24   35   13    8
+## [5,]    1    2   22   44   40   34    3
+## [6,]   49   10   18   20   47   28    9
+## [7,]   45   23    4   32   36   27   14</code></pre>
+<pre class="r"><code># calculate sum and mean in 1st row
+sum(t_my_m[1,])</code></pre>
+<pre><code>## [1] 230</code></pre>
+<pre class="r"><code>mean(t_my_m[1,])</code></pre>
+<pre><code>## [1] 32.85714</code></pre>
+<pre class="r"><code># calculate sum and mean in 1st row
+sum(t_my_m[5,])</code></pre>
+<pre><code>## [1] 146</code></pre>
+<pre class="r"><code>mean(t_my_m[5,])</code></pre>
+<pre><code>## [1] 20.85714</code></pre>
+<pre class="r"><code>eigen(my_m)</code></pre>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 174.235449+ 0.00000i -28.884243+12.46643i -28.884243-12.46643i
+## [4]  26.842466+ 0.00000i  20.161913+16.17549i  20.161913-16.17549i
+## [7]   8.366746+ 0.00000i
+## 
+## $vectors
+##              [,1]                    [,2]                    [,3]
+## [1,] 0.3561993+0i -0.55842212+0.00000000i -0.55842212+0.00000000i
+## [2,] 0.2580708+0i  0.20735241+0.14213449i  0.20735241-0.14213449i
+## [3,] 0.3993480+0i  0.30239434+0.09048274i  0.30239434-0.09048274i
+## [4,] 0.4116376+0i -0.40988161-0.30782852i -0.40988161+0.30782852i
+## [5,] 0.5338354+0i  0.09581621+0.08843452i  0.09581621-0.08843452i
+## [6,] 0.3796050+0i  0.08452091-0.09306298i  0.08452091+0.09306298i
+## [7,] 0.2202658+0i  0.46157382+0.12930736i  0.46157382-0.12930736i
+##                [,4]                  [,5]                  [,6]          [,7]
+## [1,]  0.06648827+0i -0.1588642-0.1716159i -0.1588642+0.1716159i  0.1317552+0i
+## [2,] -0.67443659+0i -0.2141939+0.3953456i -0.2141939-0.3953456i -0.6219302+0i
+## [3,] -0.28578508+0i  0.1704032-0.3256455i  0.1704032+0.3256455i -0.1007586+0i
+## [4,]  0.28572930+0i  0.3293633-0.1950894i  0.3293633+0.1950894i  0.6753335+0i
+## [5,]  0.46872295+0i  0.3122684+0.2783517i  0.3122684-0.2783517i  0.1994856+0i
+## [6,]  0.29518473+0i  0.0888638+0.2300247i  0.0888638-0.2300247i -0.2286528+0i
+## [7,] -0.26564078+0i -0.4750908+0.0000000i -0.4750908+0.0000000i -0.1937499+0i</code></pre>
+<pre class="r"><code># checking kind of numbers
+typeof(eigen(my_m)$values)</code></pre>
+<pre><code>## [1] &quot;complex&quot;</code></pre>
+<pre class="r"><code>typeof(eigen(my_m)$vectors)</code></pre>
+<pre><code>## [1] &quot;complex&quot;</code></pre>
+<div id="question-2" class="section level3">
+<h3>Question 2</h3>
+<pre class="r"><code># creating a 4*4 matrix
+z &lt;- runif(16)
+my_matrix &lt;- matrix(data=z, ncol=4)
+# creating logical values 
+x &lt;- runif(100)
+my_logical &lt;- x &lt; 0.47
+print(my_logical)</code></pre>
+<pre><code>##   [1] FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE
+##  [13]  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE
+##  [25] FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE
+##  [37] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE
+##  [49] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE
+##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE
+##  [85] FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
+##  [97] FALSE  TRUE  TRUE FALSE</code></pre>
+<pre class="r"><code>my_letters &lt;- sample(letters)
+
+newlist &lt;- list(my_matrix[2,2], my_logical[2],my_letters[2])
+
+typeof(newlist[1])</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code>typeof(newlist[2])</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code>typeof(newlist[3])</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code>z &lt;- c(0.7743394, TRUE,&quot;S&quot;)
+typeof(z)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+</div>
+<div id="question-3" class="section level3">
+<h3>Question 3</h3>
+<pre class="r"><code>my_unis&lt;- seq(from=0, to=10, length=26)
+my_letters &lt;- sample(LETTERS)
+
+#creating a dataframe 
+dframe&lt;- data.frame (my_unis,my_letters)
+print(dframe)</code></pre>
+<pre><code>##    my_unis my_letters
+## 1      0.0          I
+## 2      0.4          Q
+## 3      0.8          U
+## 4      1.2          X
+## 5      1.6          A
+## 6      2.0          W
+## 7      2.4          L
+## 8      2.8          O
+## 9      3.2          E
+## 10     3.6          P
+## 11     4.0          S
+## 12     4.4          N
+## 13     4.8          F
+## 14     5.2          K
+## 15     5.6          Y
+## 16     6.0          B
+## 17     6.4          C
+## 18     6.8          R
+## 19     7.2          D
+## 20     7.6          V
+## 21     8.0          H
+## 22     8.4          Z
+## 23     8.8          M
+## 24     9.2          G
+## 25     9.6          T
+## 26    10.0          J</code></pre>
+<pre class="r"><code># adding NAs randomly to my_unis column 
+dframe[sample(length(dframe$my_unis), size = 4),1]&lt;- NA
+print(dframe)</code></pre>
+<pre><code>##    my_unis my_letters
+## 1      0.0          I
+## 2      0.4          Q
+## 3      0.8          U
+## 4      1.2          X
+## 5      1.6          A
+## 6       NA          W
+## 7       NA          L
+## 8      2.8          O
+## 9      3.2          E
+## 10     3.6          P
+## 11     4.0          S
+## 12      NA          N
+## 13     4.8          F
+## 14     5.2          K
+## 15     5.6          Y
+## 16     6.0          B
+## 17     6.4          C
+## 18     6.8          R
+## 19     7.2          D
+## 20     7.6          V
+## 21     8.0          H
+## 22      NA          Z
+## 23     8.8          M
+## 24     9.2          G
+## 25     9.6          T
+## 26    10.0          J</code></pre>
+<pre class="r"><code># rearranging my_letters in alphabetical order
+dframe[order(dframe$my_letters),]</code></pre>
+<pre><code>##    my_unis my_letters
+## 5      1.6          A
+## 16     6.0          B
+## 17     6.4          C
+## 19     7.2          D
+## 9      3.2          E
+## 13     4.8          F
+## 24     9.2          G
+## 21     8.0          H
+## 1      0.0          I
+## 26    10.0          J
+## 14     5.2          K
+## 7       NA          L
+## 23     8.8          M
+## 12      NA          N
+## 8      2.8          O
+## 10     3.6          P
+## 2      0.4          Q
+## 18     6.8          R
+## 11     4.0          S
+## 25     9.6          T
+## 3      0.8          U
+## 20     7.6          V
+## 6       NA          W
+## 4      1.2          X
+## 15     5.6          Y
+## 22      NA          Z</code></pre>
+</div>
 
 
 

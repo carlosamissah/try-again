@@ -1,0 +1,77 @@
+---
+title: "Homework_05"
+author: "Carlos Amissah"
+date: "2024-02-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```## Question 1
+```{r}
+
+n_dims <- sample(x=seq(3,10), size = 1)
+
+n_dims^2
+
+z <- c(1:n_dims^2)
+
+Sample_z <- sample(z)
+
+# create a square matrix
+my_m <- matrix(data=Sample_z, ncol=Sample_z, nrow = Sample_z)
+print(my_m)
+
+# transpose matrix
+t_my_m <- t(my_m)
+print(t_my_m)
+
+# calculate sum and mean in 1st row
+sum(t_my_m[1,])
+mean(t_my_m[1,])
+# calculate sum and mean in 1st row
+sum(t_my_m[5,])
+mean(t_my_m[5,])
+
+eigen(my_m)
+# checking kind of numbers
+typeof(eigen(my_m)$values)
+typeof(eigen(my_m)$vectors)
+```
+### Question 2
+```{r}
+# creating a 4*4 matrix
+z <- runif(16)
+my_matrix <- matrix(data=z, ncol=4)
+# creating logical values 
+x <- runif(100)
+my_logical <- x < 0.47
+print(my_logical)
+my_letters <- sample(letters)
+
+newlist <- list(my_matrix[2,2], my_logical[2],my_letters[2])
+
+typeof(newlist[1])
+typeof(newlist[2])
+typeof(newlist[3])
+
+z <- c(0.7743394, TRUE,"S")
+typeof(z)
+```
+### Question 3
+```{r}
+my_unis<- seq(from=0, to=10, length=26)
+my_letters <- sample(LETTERS)
+
+#creating a dataframe 
+dframe<- data.frame (my_unis,my_letters)
+print(dframe)
+# adding NAs randomly to my_unis column 
+dframe[sample(length(dframe$my_unis), size = 4),1]<- NA
+print(dframe)
+# rearranging my_letters in alphabetical order
+dframe[order(dframe$my_letters),]
+```
