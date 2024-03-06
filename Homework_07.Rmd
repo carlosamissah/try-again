@@ -1,0 +1,129 @@
+---
+title: "Homework_07"
+author: "Carlos Amissah"
+date: "2024-03-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+The hypothesis tested here is that there is a difference in bird count across tree different fields
+```{r}
+# loading packsges
+library(ggplot2)
+library(MASS)
+library(dplyr)
+
+################### true data #############################
+z <- read.table("fdata.csv",header=TRUE,sep=",")
+str(z)
+summary(z)
+mean(z$number) # generate the mean number of birds recorded
+sum(z$number) # get the sample size
+sd(z$number) # get variance of the number of birds
+######### subsetting data to get mean values of elements in the charater string
+# subsetting bird count in legume fields
+aa <- subset(z, crop.type == "Legume", select = "number")
+summary(aa)
+sum(aa$number) # get the sample size
+mean(aa$number)
+sd(aa$number)
+
+# subsetting bird count in maize fields
+bb <- subset(z, crop.type == "Maize", select = "number")
+mean(bb$number)
+sd(bb$number)
+sum(bb$number)
+
+# substting bird count in mix crop fields
+cc <- subset(z, crop.type == "Mixed", select = "number")
+sum(z$number) # get the sample size
+mean(cc$number)
+sd(cc$number)
+sum(cc$number)
+```
+Simulating data using values from original data
+
+```{r}
+nGroup <- 3 # number of treatment groups
+nName <- c("Legume","Maize", "Mix") # names of groups
+nSize <- c(425,389,672) # number of observations in each group
+nMean <- c(1.8,2.0,1.9) # mean of each group
+nSD <- c(1.9,3.4,1.9) # standardd deviation of each group
+
+ID <- 1:(sum(nSize))
+
+countc <- c(rnorm(n=nSize[1],mean=nMean[1],sd=nSD[1]),
+            rnorm(n=nSize[2],mean=nMean[2],sd=nSD[2]),
+            rnorm(n=nSize[3],mean=nMean[3],sd=nSD[3]))
+cGroup <- rep(nName,nSize)
+Croptype <- data.frame(ID,cGroup,countc)
+
+# performing ANOVA
+ANOmodel <- aov(countc~cGroup,data=Croptype)
+print(ANOmodel)
+print(summary(ANOmodel))
+
+# plotting graph
+ANOPlot <- ggplot(data=Croptype,aes(x=cGroup,y=countc,fill=cGroup)) +
+  geom_boxplot()
+print(ANOPlot)
+```
+There was no significant difference between the means of the bird counts in the three field types even though total abundance varied significantly across field types
+
+
+I am now going to adjust the sample size of all three field types to see if it will be enough to cause a significant difference.
+```{r}
+nGroup <- 3 # number of treatment groups
+nName <- c("Legume","Maize", "Mix") # names of groups
+nSize <- c(620,589,672) # number of observations in each group
+nMean <- c(1.8,2.0,1.9) # mean of each group
+nSD <- c(1.9,3.4,1.9) # standardd deviation of each group
+
+ID <- 1:(sum(nSize))
+
+countc <- c(rnorm(n=nSize[1],mean=nMean[1],sd=nSD[1]),
+            rnorm(n=nSize[2],mean=nMean[2],sd=nSD[2]),
+            rnorm(n=nSize[3],mean=nMean[3],sd=nSD[3]))
+cGroup <- rep(nName,nSize)
+Croptype <- data.frame(ID,cGroup,countc)
+
+# performing ANOVA
+ANOmodel <- aov(countc~cGroup,data=Croptype)
+print(ANOmodel)
+print(summary(ANOmodel))
+
+# plotting graph
+ANOPlot <- ggplot(data=Croptype,aes(x=cGroup,y=countc,fill=cGroup)) +
+  geom_boxplot()
+print(ANOPlot)
+```
+Adjusting the sample size of the lowest group to within the size of the largest field such that the difference between the three groups was about 50 and 70 birds respectively.
+
+Next, I adjusted the mean of legume field and kept the sample size unchanged
+```{r}
+nName <- c("Legume","Maize", "Mix") # names of groups
+nSize <- c(425,389,672) # number of observations in each group
+nMean <- c(1.0,2.0,1.9) # mean of each group
+nSD <- c(1.9,3.4,1.9) # standardd deviation of each group
+
+ID <- 1:(sum(nSize))
+
+countc <- c(rnorm(n=nSize[1],mean=nMean[1],sd=nSD[1]),
+            rnorm(n=nSize[2],mean=nMean[2],sd=nSD[2]),
+            rnorm(n=nSize[3],mean=nMean[3],sd=nSD[3]))
+cGroup <- rep(nName,nSize)
+Croptype <- data.frame(ID,cGroup,countc)
+
+# performing ANOVA
+ANOmodel <- aov(countc~cGroup,data=Croptype)
+print(ANOmodel)
+print(summary(ANOmodel))
+
+# plotting graph
+ANOPlot <- ggplot(data=Croptype,aes(x=cGroup,y=countc,fill=cGroup)) +
+  geom_boxplot()
+print(ANOPlot)
+```
+Changing the mean of birds recorded in legume field from 1.8 to 1.0 yielded a significant difference in the results. Thus manipulating either the sample size or mean yields a difference in results.
