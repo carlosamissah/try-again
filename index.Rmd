@@ -22,3 +22,5 @@ Homework 5: [link](Homework_05.html)
 Homework 6: [link](Homework_06.html)
 
 Homework 7: [link](Homework_07.html)
+
+Homework 8: [link](Homework_08.html)
