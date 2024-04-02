@@ -1,0 +1,63 @@
+---
+title: "Homework_09"
+author: "Carlos Amissah"
+date: "2024-04-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+###### Organizing code with structured programming
+
+myfun <- function(nSize,nMean,nSD) {
+     ID <- 1:(sum(nSize))
+     nGroup <- c("Legume", "Maize","Mix")
+    Bird_count <- c(rnorm(n=nSize[1],mean = nMean[1],sd=nSD[1]), 
+          rnorm(n=nSize[2],mean = nMean[2],sd=nSD[2]),
+          rnorm(n=nSize[3],mean = nMean[3],sd=nSD[3]))
+     TGroup <- rep(nGroup,nSize)
+    data1 <- data.frame(ID,TGroup,Bird_count)
+    m2 <- aov(Bird_count ~ TGroup, data = data1)
+    m3<- summary(m2)
+    Anoplot <- ggplot(data1, aes(x=TGroup,y=Bird_count)) +
+    geom_boxplot(fill="#0099f8")
+    return(Anoplot)
+}
+
+nSize <- c(425,389,672) # number of observations in each group
+nMean <- c(1.8,2.0,1.9) # mean of each group
+nSD <- c(1.9,3.4,1.9) # standard deviations for each ground
+
+myfun(nSize=nSize,nMean=nMean,nSD=nSD)
+
+```
+
+### Using different means and sample size
+```{r}
+# Performing another test using different simulation
+
+myfun2 <- function(nSize,nMean,nSD) {
+  ID <- 1:(sum(nSize))
+  nGroup <- c("Legume", "Maize","Mix")
+  Bird_count <- c(rnorm(n=nSize[1],mean = nMean[1],sd=nSD[1]), 
+                  rnorm(n=nSize[2],mean = nMean[2],sd=nSD[2]),
+                  rnorm(n=nSize[3],mean = nMean[3],sd=nSD[3]))
+  TGroup <- rep(nGroup,nSize)
+  data1 <- data.frame(ID,TGroup,Bird_count)
+  m2 <- aov(Bird_count ~ TGroup, data = data1)
+  m3<- summary(m2)
+  Anoplot <- ggplot(data1, aes(x=TGroup,y=Bird_count)) +
+    geom_boxplot(fill="#2ecc71")
+  return(Anoplot)
+}
+
+nSize <- c(340, 380, 490) # number of observations in each group
+nMean <- c(2.1,2.1,1.8) # mean of each group
+nSD <- c(07,0.6,0.6) # standard deviations for each ground
+
+myfun2(nSize=nSize,nMean=nMean,nSD=nSD)
+```
