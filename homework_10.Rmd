@@ -1,0 +1,105 @@
+---
+title: "Homework_10"
+author: "Carlos Amissah"
+date: "2024-04-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+###Q1. Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable counter <- 0. Inside the loop, add 1 to counter each time you have a zero in the vector. Finally, use return(counter) for the output.
+
+```{r}
+z <- rbinom(n= 20,size=1, prob=0.5)# generates random numbers of zeroes and ones
+count <- function(z_input) {
+  counter <- 0
+  for (i in 1:length(z_input)) {
+    counter <- counter + as.numeric(z_input[i]==0)
+  }
+  return(counter)
+}
+count(z_input=z)
+```
+
+###Q2. Use subsetting instead of a loop to rewrite the function as a single line of code.
+
+```{r}
+z <- rbinom(n= 10,size=1, prob=0.5)
+counter <- sum(z==0) 
+print(counter)
+```
+
+###Q3. Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
+
+```{r}
+z <- function(row,col){
+  ma <- matrix(nrow = row, ncol = col)
+  for (i in 1:nrow(ma)){
+    for(j in 1:ncol(ma)){
+      ma[i,j] <- i * j
+    }
+  }
+  return(ma)
+}
+z(row = 2, col=3)
+```
+
+###Q4a. Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.
+
+```{r}
+nGroup <- c("Ball", "Bell","Bag")
+nSize <- c(100,100,100) # number of observations in each group
+nMean <- c(17,21,32) # mean of each group
+nSD <- c(3.5,2.7,0.9)
+Classroom <- c(rnorm(n=nSize[1],mean = nMean[1],sd=nSD[1]), 
+               rnorm(n=nSize[2],mean = nMean[2],sd=nSD[2]),
+               rnorm(n=nSize[3],mean = nMean[3],sd=nSD[3]))
+TGroup <- rep(nGroup,nSize)
+data1 <- data.frame(Classroom, TGroup)
+print(data1)
+ str(data1)
+```
+
+###4b. Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3.
+
+```{r}
+head(data1)
+myfun <- function(data1) {
+data1$Classroom <- sample(data1$Classroom)
+nMean <- tapply(data1$Classroom,data1$TGroup,mean)
+return(nMean)
+}
+NewMeans<- myfun(data1)
+print(NewMeans)
+```
+
+###4c. Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.
+
+```{r}
+Replicated <- data.frame(replicate = 1:100)
+for (i in 1:100) {
+  repeatNewMeans <- myfun(data1)
+  Replicated[i, c("replicate", "BallMean", "BagMean", "BellMean")] <- c(i, repeatNewMeans)
+}
+print(head(Replicated))
+```
+
+###4d. Use qplot() to create a histogram of the means for each reshuffled group. Or, if you want a challenge, use ggplot() to overlay all 3 histograms in the same figure. How do the distributions of reshuffled means compare to the original means?
+
+```{r}
+library(ggplot2)
+# Create a vector of means for each group
+BallMeans <- Replicated$BallMean
+BellMeans <- Replicated$BellMean
+BagMeans <- Replicated$BagMean
+
+# Combine means into a data frame
+dataMeans <- data.frame(Group = rep(c("Ball", "Bell", "Bag"), each = 100),
+                         Mean = c(BallMeans, BellMeans, BagMeans))
+
+# Creating a histogram 
+qplot(data = dataMeans, x = Mean, fill = Group, geom = "histogram", binwidth = 1,
+      xlab = "Mean", ylab = "Frequency")
+```
