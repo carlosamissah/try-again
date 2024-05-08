@@ -1,0 +1,52 @@
+---
+title: 'Homework #12'
+author: "Carlos Amissah"
+date: "2024-05-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+# call in mtcars
+data("mtcars")
+str(mtcars)
+head(mtcars)
+names(mtcars)
+
+library(ggplot2)
+
+ggplot(mtcars, aes(x=gear, y= mpg)) +
+  geom_bar(stat="identity")
+
+# I want to get each bar colored differently
+ggplot(mtcars, aes(x=gear, y= mpg, fill=gear)) +
+  geom_bar(stat="identity")
+
+# Time to add title and axis labels 
+ggplot(mtcars, aes(x=gear, y= mpg, fill=gear)) +
+  geom_bar(stat="identity") +
+  labs(title = "Number of forward gears and miles per gallons used",
+       x = "Number of forward gears",
+       y = "Miles/gallons")
+
+# let's add a line to the bars
+ggplot(mtcars) +
+  geom_col(aes(x=gear, y= mpg, fill = gear)) +
+  geom_line(aes(x= gear, y= carb), stat = "identity",
+            color = "red", size = 2)+
+  labs(title = NULL,
+       x = "Number of forward gears",
+       y = "Miles/gallons")
+
+# lets do some scaling to transform the line
+ggplot(mtcars) +
+  geom_col(aes(x=gear, y= mpg, fill = gear)) +
+  geom_line(aes(x= gear, y= carb*100), stat = "identity",
+            color = "red", size = 2)+
+  labs(title = NULL,
+       x = "Number of forward gears",
+       y = "Miles/gallons")+
+scale_y_continuous(sec.axis = sec_axis(~.*0.001, name = "Percentage"))# use y-continuous since we are dealing with a secondary y-axis
+```

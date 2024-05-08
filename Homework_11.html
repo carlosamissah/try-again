@@ -11,9 +11,9 @@
 
 <meta name="author" content="Carlos Amissah" />
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-05-08" />
 
-<title>index</title>
+<title>Homework #11</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,24 +350,214 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">index</h1>
+<h1 class="title toc-ignore">Homework #11</h1>
 <h4 class="author">Carlos Amissah</h4>
-<h4 class="date">2024-01-24</h4>
+<h4 class="date">2024-05-08</h4>
 
 </div>
 
 
-<p>Homework 2: <a href="Homework2.html">link</a></p>
-<p>Homework 3: <a href="Homework3.html">link</a></p>
-<p>Homework 4: <a href="Homework_04.html">link</a></p>
-<p>Homework 5: <a href="Homework_05.html">link</a></p>
-<p>Homework 6: <a href="Homework_06.html">link</a></p>
-<p>Homework 7: <a href="Homework_07.html">link</a></p>
-<p>Homework 8: <a href="Homework_08.html">link</a></p>
-<p>Homework 9: <a href="Homework_09.html">link</a></p>
-<p>Homework 10: <a href="Homework_10.html">link</a></p>
-<p>Homework 11: <a href="Homework_11.html">link</a></p>
-<p>Homework 12: <a href="Homework_12.html">link</a></p>
+<pre class="r"><code># Set the path to the main folder containing subfolders
+main_folder &lt;- &quot;C:/Users/carlos/Desktop/OriginalData&quot;
+
+# Get the list of subfolders within the main folder
+subfolders &lt;- list.dirs(main_folder, full.names = TRUE, recursive = FALSE)
+
+# Define the file pattern
+file_pattern &lt;- &quot;NEON.D01.BART.DP1.10003.001.brd_countdata.*\\.csv&quot;
+
+# Create a folder to hold the files of interest
+Nfolder &lt;- &quot;C:/Users/carlos/Desktop/NewFolder&quot;
+if (!file.exists(Nfolder)) {
+  dir.create(Nfolder)
+}
+
+# Loop through each subfolder
+for (folder in subfolders) {
+  # Get the list of files in the subfolder
+  files &lt;- list.files(folder, pattern = file_pattern, full.names = TRUE)
+  
+  # If there are matching files, copy them to the new folder
+  if (length(files) &gt; 0) {
+    for (file in files) {
+      file.copy(file, paste0(Nfolder, &quot;/&quot;, basename(file)))
+    }
+  } else {
+    cat(&quot;No files matching&quot;, file_pattern, &quot;found in&quot;, folder, &quot;\n&quot;) 
+  }
+}</code></pre>
+<pre><code>## No files matching NEON.D01.BART.DP1.10003.001.brd_countdata.*\.csv found in C:/Users/carlos/Desktop/OriginalData/.Rproj.user 
+## No files matching NEON.D01.BART.DP1.10003.001.brd_countdata.*\.csv found in C:/Users/carlos/Desktop/OriginalData/gitsandbox</code></pre>
+<div id="starting-with-pseudo-code-generate-functions-for-1-cleaning-the-data-for-any-emptymissing-cases-2-extract-the-year-from-each-file-name-3-calculate-abundance-for-each-year-total-number-of-individuals-found-4-calculate-species-richness-for-each-yearnumber-of-unique-species-found" class="section level5">
+<h5>Starting with pseudo-code, generate functions for 1) Cleaning the
+data for any empty/missing cases, 2) Extract the year from each file
+name, 3) Calculate Abundance for each year (Total number of individuals
+found), 4) Calculate Species Richness for each year(Number of unique
+species found)</h5>
+<pre class="r"><code>#2 cleaning data
+library(stringr)# required to use str_extract()
+
+# Function to clean the data
+clean_data &lt;- function(data) {
+  data &lt;- data[complete.cases(data$scientificName), ]
+  return(data)
+}
+
+# Function to extract the year from the file name
+extract_year &lt;- function(file_name) {
+  year &lt;- str_extract(file_name, &quot;\\d{4}&quot;) # Extract only the year
+  return(year)
+}
+
+# Function to calculate abundance
+calculate_abundance &lt;- function(data) {
+  abundance &lt;- nrow(data) # Abundance is the number of rows
+  return(abundance)
+}
+
+# Function to calculate species richness
+calculate_species_richness &lt;- function(data) {
+  richness &lt;- length(unique(data$scientificName)) # Richness is the number of unique species
+  return(richness)
+}
+
+# Set the directory where the files are located
+n_dir &lt;- &quot;C:/Users/carlos/Desktop/Newfolder&quot;
+
+# Create a list with the files in the working Directory
+files &lt;- list.files(n_dir, pattern = &quot;NEON.D01.BART.DP1.10003.001.brd_countdata..*\\.csv$&quot;, full.names = TRUE)
+
+# Loop through each file
+for (file in files) {
+  # Extract the year from the file name
+  year &lt;- extract_year(basename(file))
+  
+  # Read the data from the file
+  data &lt;- read.csv(file)
+  
+  # Clean the data
+  cleaned_data &lt;- clean_data(data)
+  
+  # Calculate abundance
+  abundance &lt;- calculate_abundance(cleaned_data)
+  
+  # Calculate species richness
+  richness &lt;- calculate_species_richness(cleaned_data)
+  
+  # Print results
+  cat(&quot;File:&quot;, basename(file), &quot;\n&quot;)
+  cat(&quot;Year:&quot;, year, &quot;\n&quot;)
+  cat(&quot;Abundance:&quot;, abundance, &quot;\n&quot;)
+  cat(&quot;Species Richness:&quot;, richness, &quot;\n&quot;)
+  cat(&quot;\n&quot;)
+}</code></pre>
+<pre><code>## File: NEON.D01.BART.DP1.10003.001.brd_countdata.2015-06.basic.20231226T232626Z.csv 
+## Year: 1000 
+## Abundance: 454 
+## Species Richness: 40 
+## 
+## File: NEON.D01.BART.DP1.10003.001.brd_countdata.2016-06.basic.20231227T013428Z.csv 
+## Year: 1000 
+## Abundance: 883 
+## Species Richness: 39 
+## 
+## File: NEON.D01.BART.DP1.10003.001.brd_countdata.2017-06.basic.20231227T094709Z.csv 
+## Year: 1000 
+## Abundance: 685 
+## Species Richness: 35 
+## 
+## File: NEON.D01.BART.DP1.10003.001.brd_countdata.2018-06.basic.20231228T172744Z.csv 
+## Year: 1000 
+## Abundance: 772 
+## Species Richness: 37 
+## 
+## File: NEON.D01.BART.DP1.10003.001.brd_countdata.2019-06.basic.20231227T184129Z.csv 
+## Year: 1000 
+## Abundance: 628 
+## Species Richness: 44 
+## 
+## File: NEON.D01.BART.DP1.10003.001.brd_countdata.2020-06.basic.20231227T224944Z.csv 
+## Year: 1000 
+## Abundance: 626 
+## Species Richness: 46 
+## 
+## File: NEON.D01.BART.DP1.10003.001.brd_countdata.2020-07.basic.20231227T225020Z.csv 
+## Year: 1000 
+## Abundance: 89 
+## Species Richness: 18 
+## 
+## File: NEON.D01.BART.DP1.10003.001.brd_countdata.2021-06.basic.20231228T010546Z.csv 
+## Year: 1000 
+## Abundance: 1015 
+## Species Richness: 50 
+## 
+## File: NEON.D01.BART.DP1.10003.001.brd_countdata.2022-06.basic.20231229T053256Z.csv 
+## Year: 1000 
+## Abundance: 699 
+## Species Richness: 39</code></pre>
+<p>#####Create an initial empty data frame to hold the above summary
+statistics-you should have 4 columns, one for the file name, one for
+abundance, one for species richness, and one for year.</p>
+<pre class="r"><code># Create a new data frame to store the results
+results &lt;- data.frame(File = character(),
+                      Date = character(),
+                      Abundance = numeric(),
+                      Richness = numeric(),
+                      stringsAsFactors = FALSE) # Ensuring strings are treated as characters</code></pre>
+</div>
+<div id="using-a-for-loop-run-your-created-functions-as-a-batch-process-for-each-folder-changing-the-working-directory-as-necessary-to-read-in-the-correct-files-calculating-summary-statistics-with-your-created-functions-and-then-writing-them-out-into-your-summary-statistics-data-frame." class="section level5">
+<h5>Using a for loop, run your created functions as a batch process for
+each folder, changing the working directory as necessary to read in the
+correct files, calculating summary statistics with your created
+functions, and then writing them out into your summary statistics data
+frame.</h5>
+<pre class="r"><code>  # Loop through each file in the folder
+  for (file in files) {
+    # Extract the year from the file name
+    year &lt;- extract_year(basename(file))
+    
+    # Read the data from the file
+    data &lt;- read.csv(file)
+    
+    # Clean the data
+    cleaned_data &lt;- clean_data(data)
+    
+    # Calculate abundance
+    abundance &lt;- calculate_abundance(cleaned_data)
+    
+    # Calculate species richness
+    richness &lt;- calculate_species_richness(cleaned_data)
+    
+    # Add the results to the data frame
+    results &lt;- rbind(results, data.frame(File = basename(file),
+                                         Date = year,
+                                         Abundance = abundance,
+                                         Richness = richness,
+                                         stringsAsFactors = FALSE)) # Ensuring strings are treated as characters
+  }
+# Print the results
+print(results)</code></pre>
+<pre><code>##                                                                           File
+## 1 NEON.D01.BART.DP1.10003.001.brd_countdata.2015-06.basic.20231226T232626Z.csv
+## 2 NEON.D01.BART.DP1.10003.001.brd_countdata.2016-06.basic.20231227T013428Z.csv
+## 3 NEON.D01.BART.DP1.10003.001.brd_countdata.2017-06.basic.20231227T094709Z.csv
+## 4 NEON.D01.BART.DP1.10003.001.brd_countdata.2018-06.basic.20231228T172744Z.csv
+## 5 NEON.D01.BART.DP1.10003.001.brd_countdata.2019-06.basic.20231227T184129Z.csv
+## 6 NEON.D01.BART.DP1.10003.001.brd_countdata.2020-06.basic.20231227T224944Z.csv
+## 7 NEON.D01.BART.DP1.10003.001.brd_countdata.2020-07.basic.20231227T225020Z.csv
+## 8 NEON.D01.BART.DP1.10003.001.brd_countdata.2021-06.basic.20231228T010546Z.csv
+## 9 NEON.D01.BART.DP1.10003.001.brd_countdata.2022-06.basic.20231229T053256Z.csv
+##   Date Abundance Richness
+## 1 1000       454       40
+## 2 1000       883       39
+## 3 1000       685       35
+## 4 1000       772       37
+## 5 1000       628       44
+## 6 1000       626       46
+## 7 1000        89       18
+## 8 1000      1015       50
+## 9 1000       699       39</code></pre>
+</div>
 
 
 
